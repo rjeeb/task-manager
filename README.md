@@ -34,6 +34,44 @@ id,title,description,due_date,status
 2,Clean room,Clean bedroom and desk,2025-07-12,done
 ```
 
+- **Recurring Tasks**
+  - When adding a task, the user can optionally specify a `recurrence` value:
+    - `none` (default)
+    - `daily`
+    - `weekly`
+    - `monthly`
+  - When a recurring task is marked as `done`, a new task should be automatically created with:
+    - The same title and description
+    - A new due date, based on the recurrence pattern
+    - Status set to `pending`
+    - The same recurrence value
+
+  - **Behavior:**
+    - If a task is marked as `done` after its due date, the new task should still be created based on the original recurrence pattern.
+    - Only one new task is created per completion (no backfilling).
+    - The system does **not** automatically create missed recurring tasks unless explicitly extended to do so.
+
+  - **Example:**
+    If a task is:
+    ```
+    id: 3
+    title: Water the plants
+    description: Balcony and living room
+    due_date: 2025-07-10
+    status: done
+    recurrence: daily
+    ```
+
+    Then a new task should be automatically added:
+    ```
+    id: 4
+    title: Water the plants
+    description: Balcony and living room
+    due_date: 2025-07-11
+    status: pending
+    recurrence: daily
+    ```
+
 ## 📂 Technical Requirements
 
 - The application must be written in **plain Java**.
@@ -51,4 +89,4 @@ id,title,description,due_date,status
 
 - Do **not** use any external libraries or frameworks.
 - Do **not** use ChatGPT or similar tools to assist in solving the problem.
-- Do **not** use any graphical user interface (GUI)
+- Do **not** use any graphical user interface (GUI).
